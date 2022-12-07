@@ -14,10 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -166,14 +163,15 @@ fun MainContent() {
                 Column(
                     modifier = Modifier.fillMaxWidth()
                     , horizontalAlignment = Alignment.CenterHorizontally
-                    , verticalArrangement = Arrangement.Center
+//                    , verticalArrangement = Arrangement.Center
                 ) {
                     Button(onClick = { /*TODO: call API*/ }) {
                         Text("Refresh")
                     }
                 }
                 Column {
-                    Button(onClick = { }) {
+                    Button(onClick = { }
+                        , colors = ButtonDefaults.buttonColors(containerColor = Color.Red, contentColor = Color.Yellow)) {
                         Image(
                             painter = painterResource(R.drawable.mavatar)
                             , contentDescription = ""
@@ -182,8 +180,10 @@ fun MainContent() {
                         Text("Test")
                     }
                 }
-                Text("blah", color = Color.Green)
-                Text("blegh", style = TextStyle(color = Color.Blue))
+                Text("blah", color = Color.Unspecified, modifier = Modifier
+                    .padding(0.dp)
+                    .padding(bottom = 10.dp))
+                Text("blegh", color = Color.Blue, style = TextStyle(color = Color.Green, background = Color.Red))
                 Spacer(modifier = Modifier.height(15.dp))
                 Conversation(people = testItems())
             }

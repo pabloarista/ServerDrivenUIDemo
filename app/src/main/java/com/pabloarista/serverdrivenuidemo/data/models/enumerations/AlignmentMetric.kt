@@ -1,4 +1,10 @@
 package com.pabloarista.serverdrivenuidemo.data.models.enumerations
 
-enum class AlignmentMetric {
+enum class AlignmentMetric(override val value: Int): ConvertibleEnum<Int> {
+    LEFT(1)
+    , RIGHT(2)
+    , CENTER(3)
+    , JUSTIFY(4)
+    , START(5)
+    , END(6)
 }
