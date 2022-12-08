@@ -146,16 +146,17 @@ class Component(val id: Int
 
     @Composable
     fun buildText() {
-        val textToDisplay = text?: ""
+        Text(text = text?: ""
+            , modifier = getModifier()
+            , style = getTextStyle() ?: LocalTextStyle.current)
+    }
+    @Composable
+    fun getTextStyle(): TextStyle? {
         if(style == null) {
-            Text(text = textToDisplay)
-            return
+            return null
         }
-
         val color = if(style.color == null) Color.Unspecified else style.color.toColor()
         val backgroundColor = if(style.secondaryColor == null) Color.Unspecified else style.secondaryColor.toColor()
-
-        var modifier = getModifier()
 
         val fontSize = if(style.size != null) style.size.sp else TextUnit.Unspecified
         val textAlign = when(style.alignmentFlag) {
@@ -193,16 +194,17 @@ class Component(val id: Int
             TextDecoration.None
         }
         val textIndent = if(style.font == null) null else TextIndent(firstLine = style.font.firstLineIndent.sp, restLine = style.font.otherLineIndent.sp)
-        Text(text = textToDisplay
-            , color = color
-            , modifier = modifier
+
+        val textStyle = TextStyle(color = color
+            , background = backgroundColor
+            , textIndent = textIndent
             , fontSize = fontSize
             , textAlign = textAlign
             , fontWeight = fontWeight
             , fontStyle =  fontStyle
             , fontFamily = fontFamily
-            , textDecoration = textDecoration
-            , style = TextStyle(color = color, background = backgroundColor, textIndent = textIndent))
+            , textDecoration = textDecoration)
+        return textStyle
     }
 
     @Composable
@@ -214,7 +216,7 @@ class Component(val id: Int
         val backgroundColor = style?.secondaryColor.toColor()
         BasicTextField(
             value = value
-            , textStyle = TextStyle(color = color, background = backgroundColor)
+            , textStyle = getTextStyle() ?: TextStyle.Default
             , onValueChange = {
                 // it is crucial that the update is fed back into BasicTextField in order to
                 // see updates on the text
