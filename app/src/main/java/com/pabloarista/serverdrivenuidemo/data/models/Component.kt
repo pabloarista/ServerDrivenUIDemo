@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.widget.ImageView
-import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -15,9 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Surface
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -73,6 +70,11 @@ class Component(val id: Int
             ComponentType.FLOATING_ACTION_BUTTON        -> buildFloatinActionButton()
             ComponentType.HORIZONTAL_LAYOUT             -> buildRow()
             ComponentType.VERTICAL_LAYOUT               -> buildColumn()
+            ComponentType.SWITCH                        -> buildSwitch()
+            ComponentType.RADIO_BUTTON                  -> buildRadioButton()
+            ComponentType.SLIDER                        -> buildSlider()
+            ComponentType.CHECKBOX                      -> buildCheckBox()
+            ComponentType.DIVIDER                       -> buildDivider()
         }
     }
 
@@ -92,6 +94,24 @@ class Component(val id: Int
             }
         }
 
+        return modifier
+    }
+
+    fun Modifier.getPadding(padding: List<PaddingMetric>?): Modifier {
+        var modifier = this
+        if(padding?.isEmpty() != false) {
+            return modifier
+        }
+
+        for(currentPadding in padding!!) {
+            when(currentPadding.positionFlag) {
+                PositionMetric.START        -> modifier = modifier.padding(start = currentPadding.value.dp)
+                PositionMetric.END          -> modifier = modifier.padding(end = currentPadding.value.dp)
+                PositionMetric.TOP          -> modifier = modifier.padding(top = currentPadding.value.dp)
+                PositionMetric.BOTTOM       -> modifier = modifier.padding(bottom = currentPadding.value.dp)
+                PositionMetric.ALL          -> modifier = modifier.padding(all = currentPadding.value.dp)
+            }
+        }
         return modifier
     }
 
@@ -116,6 +136,14 @@ class Component(val id: Int
         return modifier
     }
 
+    fun Modifier.getBorder(border: BorderMetric?): Modifier {
+        val modifier = if(border == null) this
+            else this.border(width = border.width.dp
+            , color = border.color.toColor()
+            , shape = border.shapeFlag.toShape(border.shapeSize))
+        return modifier
+    }
+
     @Composable
     fun buildText() {
         val textToDisplay = text?: ""
@@ -127,10 +155,7 @@ class Component(val id: Int
         val color = if(style.color == null) Color.Unspecified else style.color.toColor()
         val backgroundColor = if(style.secondaryColor == null) Color.Unspecified else style.secondaryColor.toColor()
 
-        var modifier = style.padding
-            .getPadding()
-            .getHeight(style.height)
-            .getWidth(style.width)
+        var modifier = getModifier()
 
         val fontSize = if(style.size != null) style.size.sp else TextUnit.Unspecified
         val textAlign = when(style.alignmentFlag) {
@@ -183,43 +208,42 @@ class Component(val id: Int
     @Composable
     fun buildTextField() {
         var value by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-            mutableStateOf(TextFieldValue(text?: ""))
+            mutableStateOf(TextFieldValue(""))
         }
         val color = style?.color.toColor()
         val backgroundColor = style?.secondaryColor.toColor()
         BasicTextField(
-            value = value,
-            textStyle = TextStyle(color = color, background = backgroundColor),
-            onValueChange = {
+            value = value
+            , textStyle = TextStyle(color = color, background = backgroundColor)
+            , onValueChange = {
                 // it is crucial that the update is fed back into BasicTextField in order to
                 // see updates on the text
                 value = it
+            }, decorationBox = { innerTextField ->
+                Box(modifier = //style?.padding
+                Modifier
+                    .padding(0.dp)
+                    .getHeight(style?.height)
+                    .getWidth(style?.width)
+                    .getSize(style?.size)
+                    .getBorder(style?.border)
+                    .getPadding(style?.padding)
+                    ) {
+                    if(value.text.isEmpty()) {
+                        Text(text = text?: "")
+                    }
+                    innerTextField()
+                }
             }
         )
     }
 
     @Composable
     fun buildImage() {
-        var modifier = style?.padding
-            .getPadding()
-            .getHeight(style?.height)
-            .getWidth(style?.width)
-            .getSize(style?.size)
+        var modifier = getModifier()
 
         if(style?.clipShape != null && style.clipShapeFlag.value != ShapeMetric.DEFAULT.value) {
-            val shape = when(style.clipShapeFlag) {
-                ShapeMetric.CIRCLE      -> CircleShape
-                ShapeMetric.RECTANGLE   -> RectangleShape
-                else                    -> RectangleShape
-            }
-            modifier = modifier.clip(shape)
-        }
-        if(style?.border != null) {
-            val borderShape = when(style.border.shapeFlag) {
-                ShapeMetric.CIRCLE      -> CircleShape
-                else                    -> RectangleShape
-            }
-            modifier = modifier.border(width = style.border.width.dp, color = style.border.color.toColor(), shape = borderShape)
+            modifier = modifier.clip(style.clipShapeFlag.toShape(style.clipShapeSize))
         }
 
         Image(painter = rememberAsyncImagePainter(dataApiPath)
@@ -242,11 +266,7 @@ class Component(val id: Int
 
     @Composable
     fun buildRow() {
-        var modifier = style?.padding
-            .getPadding()
-            .getHeight(style?.height)
-            .getWidth(style?.width)
-            .getSize(style?.size)
+        var modifier = getModifier()
 
         val verticalAlignment:Alignment.Vertical = when(style?.alignmentFlag) {
             AlignmentMetric.LEFT, AlignmentMetric.START         -> Alignment.Top
@@ -264,11 +284,7 @@ class Component(val id: Int
 
     @Composable
     fun buildColumn() {
-        var modifier = style?.padding
-            .getPadding()
-            .getWidth(style?.width)
-            .getHeight(style?.height)
-            .getSize(style?.size)
+        var modifier = getModifier()
 
         val horizontalAlignment = when(style?.alignmentFlag) {
             AlignmentMetric.LEFT, AlignmentMetric.START         -> Alignment.Start
@@ -310,7 +326,9 @@ class Component(val id: Int
     fun buildButton() {
         val color = if(style?.color == null) Color.Unspecified else style.color.toColor()
         val backgroundColor = if(style?.secondaryColor == null) Color.Unspecified else style.secondaryColor.toColor()
+        val modifier = getModifier()
         Button(onClick = { /*TODO*/ }
+            , modifier = modifier
             , colors = ButtonDefaults.buttonColors(containerColor = backgroundColor, contentColor = color)) {
             for(child in children) {
                 child.build()
@@ -320,13 +338,9 @@ class Component(val id: Int
 
     @Composable
     fun buildSurface() {
-        var modifier = style?.padding
-            .getPadding()
-            .getSize(style?.size)
-            .getHeight(style?.height)
-            .getWidth(style?.width)
+        var modifier = getModifier()
         val color = if(style?.color == null) Color.Unspecified else style.color.toColor()
-        val shape = if(style?.shapeMetric == null || style.shapeMetric == ShapeMetric.RECTANGLE || style.shapeMetric == ShapeMetric.DEFAULT) RectangleShape else CircleShape
+        val shape = style?.shapeMetric.toShape(style?.shapeSize?: 0.0)
         Surface(modifier = modifier
             , color = color
             , shape = shape) {
@@ -338,7 +352,76 @@ class Component(val id: Int
 
     @Composable
     fun buildFloatinActionButton() {
+        val shape = if(style?.shapeMetric == null) FloatingActionButtonDefaults.shape
+            else style.shapeMetric.toShape(style?.shapeSize)
+        val containerColor = if(style?.secondaryColor == null || style.secondaryColor.isBlank()) FloatingActionButtonDefaults.containerColor
+            else style?.secondaryColor.toColor()
+        val contentColor = if(style?.color == null || style.color.isBlank()) contentColorFor(containerColor)
+            else style?.color.toColor()
+        FloatingActionButton(onClick = { /*TODO*/ }
+            , modifier = getModifier()
+            , shape = shape
+            , containerColor = containerColor
+            , contentColor = contentColor) {
+            for(child in children) {
+                child.build()
+            }
+        }
+    }
 
+    @Composable
+    fun buildSwitch() {
+        val switchState = remember{ mutableStateOf(false)}
+        Switch(checked = switchState.value
+            , onCheckedChange = { switchState.value = it }
+            , modifier = getModifier())
+    }
+
+    @Composable
+    fun buildRadioButton() {
+        val radioState = remember { mutableStateOf(false) }
+        RadioButton(onClick = { radioState.value = !radioState.value }
+            , selected = radioState.value
+            , modifier = getModifier())
+    }
+
+    @Composable
+    fun buildSlider() {
+//        val isColorNullOrBlank = style?.color?.isBlank()?: true
+//        val isSecondaryColorNullOrBlank = style?.secondaryColor?.isBlank()?: true
+//        val colors = if(isColorNullOrBlank && isSecondaryColorNullOrBlank) SliderDefaults.colors()
+//            else SliderColors()
+        val sliderState = remember { mutableStateOf(0f)}
+        Slider(value = sliderState.value
+            , onValueChange = { sliderState.value = it}
+//            , colors =
+            , modifier = getModifier())
+    }
+
+    @Composable
+    fun buildCheckBox() {
+        val checkState = remember { mutableStateOf(false) }
+        Checkbox(checked = checkState.value
+            , onCheckedChange = { checkState.value = it}
+            , modifier = getModifier())
+    }
+
+    @Composable
+    fun buildDivider() {
+        val thickness = if(style?.size == null) DividerDefaults.Thickness
+            else style.size.dp
+        Divider(modifier = getModifier()
+            , thickness = thickness
+            , color = style?.color.toColor())
+    }
+
+    fun getModifier(): Modifier {
+        return style?.padding
+            .getPadding()
+            .getSize(style?.size)
+            .getHeight(style?.height)
+            .getWidth(style?.width)
+            .getBorder(style?.border)
     }
 }
 

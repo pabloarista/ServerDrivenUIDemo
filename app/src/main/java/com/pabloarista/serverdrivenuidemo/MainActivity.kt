@@ -56,10 +56,10 @@ class MainActivity : ComponentActivity() {
     }
 
     fun serverContentCallback(component: Component?) {
-        val component = component?: return
         setContent {
             Column {
                 refreshButton()
+                val component = component?: return@Column
                 serverContent(component = component)
             }
         }
