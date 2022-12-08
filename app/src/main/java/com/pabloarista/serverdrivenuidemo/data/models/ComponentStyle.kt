@@ -13,7 +13,9 @@ class ComponentStyle(val padding: List<PaddingMetric>
     , val size              : Double? = null
     , val border            : BorderMetric? = null
     , val alignment         : Int? = null
-    , val font              : ComponentFontStyle? = null) {
+    , val font              : ComponentFontStyle? = null
+    , val shape              : Int? = null) {
     val clipShapeFlag get() = clipShape.toEnum(defaultValue = ShapeMetric.DEFAULT)
     val alignmentFlag get() = alignment?.toEnum(defaultValue = AlignmentMetric.LEFT)
+    val shapeMetric get() = shape?.toEnum(defaultValue = ShapeMetric.DEFAULT)
 }
