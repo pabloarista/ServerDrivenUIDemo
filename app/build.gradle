@@ -63,5 +63,6 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    //this is used for downloading image URLs in the image jetpackcompose
     implementation("io.coil-kt:coil-compose:2.2.2")
 }
