@@ -1,8 +1,8 @@
-package com.pabloarista.serverdrivenuidemo.data.models
+package com.pabloarista.serverdrivenuidemo.shared.data.models
 
-import com.pabloarista.serverdrivenuidemo.data.models.enumerations.AlignmentMetric
-import com.pabloarista.serverdrivenuidemo.data.models.enumerations.ShapeMetric
-import com.pabloarista.serverdrivenuidemo.data.models.enumerations.toEnum
+import com.pabloarista.serverdrivenuidemo.shared.data.models.enumerations.AlignmentMetric
+import com.pabloarista.serverdrivenuidemo.shared.data.models.enumerations.ShapeMetric
+import com.pabloarista.serverdrivenuidemo.shared.data.models.enumerations.toEnum
 
 class ComponentStyle(val padding: List<PaddingMetric>
     , val color             : String? = null

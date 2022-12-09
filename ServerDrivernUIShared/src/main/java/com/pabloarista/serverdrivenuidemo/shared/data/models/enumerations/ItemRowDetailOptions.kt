@@ -1,4 +1,4 @@
-package com.pabloarista.serverdrivenuidemo.data.models.enumerations
+package com.pabloarista.serverdrivenuidemo.shared.data.models.enumerations
 
 enum class ItemRowDetailOptions(override val value: Int): ConvertibleEnum<Int> {
     EXPAND_ANIMATION(1 shl 0 )

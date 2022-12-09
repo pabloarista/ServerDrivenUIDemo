@@ -1,4 +1,4 @@
-package com.pabloarista.serverdrivenuidemo.data.models.enumerations
+package com.pabloarista.serverdrivenuidemo.shared.data.models.enumerations
 
 enum class PositionMetric(override val value: Int): ConvertibleEnum<Int> {
     START(1 shl 0)

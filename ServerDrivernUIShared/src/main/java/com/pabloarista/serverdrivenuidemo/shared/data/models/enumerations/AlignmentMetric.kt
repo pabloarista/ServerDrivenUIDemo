@@ -1,4 +1,4 @@
-package com.pabloarista.serverdrivenuidemo.data.models.enumerations
+package com.pabloarista.serverdrivenuidemo.shared.data.models.enumerations
 
 enum class AlignmentMetric(override val value: Int): ConvertibleEnum<Int> {
     LEFT(1)

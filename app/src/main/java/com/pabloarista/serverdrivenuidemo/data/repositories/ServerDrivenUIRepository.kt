@@ -1,7 +1,7 @@
 package com.pabloarista.serverdrivenuidemo.data.repositories
 
 import com.google.gson.Gson
-import com.pabloarista.serverdrivenuidemo.data.models.Component
+import com.pabloarista.serverdrivenuidemo.shared.data.models.Component
 import okhttp3.OkHttpClient
 import okhttp3.Request
 

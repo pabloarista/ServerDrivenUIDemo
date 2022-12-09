@@ -1,6 +1,6 @@
 package com.pabloarista.serverdrivenuidemo.data.viewmodels
 
-import com.pabloarista.serverdrivenuidemo.data.models.Component
+import com.pabloarista.serverdrivenuidemo.shared.data.models.Component
 import com.pabloarista.serverdrivenuidemo.data.repositories.ServerDrivenUIRepository
 import kotlinx.coroutines.*
 

@@ -38,15 +38,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.pabloarista.serverdrivenuidemo.data.models.Component
-import com.pabloarista.serverdrivenuidemo.data.models.toColor
+import com.pabloarista.serverdrivenuidemo.ui.build
 import com.pabloarista.serverdrivenuidemo.ui.theme.ServerDrivenUIDemoTheme
-
+import com.pabloarista.serverdrivenuidemo.ui.toColor
+import org.simpleframework.xml.Serializer
+import org.simpleframework.xml.core.Persister
+import com.pabloarista.serverdrivenuidemo.shared.data.models.Component
 
 class MainActivity : ComponentActivity() {
     val viewModel = ServerDrivenUIApplication.serverDrivernUIViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val serializer: Serializer = Persister()
+        val dataFetch = serializer.read(XmlTest::class.java, xmlTest)
+        println(dataFetch)
         refreshUi()
     }
 
@@ -59,8 +64,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             Column {
                 refreshButton()
-                val component = component?: return@Column
-                serverContent(component = component)
+                if(component != null) {
+                    serverContent(component = component)
+                }
             }
         }
     }
@@ -264,3 +270,12 @@ val MaterialTheme.shapeScheme: Shape
     @Composable
     @ReadOnlyComposable
     get() = LocalShape.current
+val xmlTest = "" +
+        "<XmlTest>" +
+            "<child>blah</child>" +
+        "</XmlTest>"
+
+class XmlTest {
+    lateinit var child: String
+}
+
