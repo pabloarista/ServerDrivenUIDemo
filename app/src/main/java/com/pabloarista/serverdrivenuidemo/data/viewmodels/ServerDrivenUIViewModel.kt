@@ -4,7 +4,8 @@ import com.pabloarista.serverdrivenuidemo.shared.data.models.Component
 import com.pabloarista.serverdrivenuidemo.data.repositories.ServerDrivenUIRepository
 import kotlinx.coroutines.*
 
-class ServerDrivenUIViewModel(private val repository: ServerDrivenUIRepository) {
+class ServerDrivenUIViewModel(private val repository: ServerDrivenUIRepository
+                            , private val dispatcher: CoroutineDispatcher = Dispatchers.Main) {
     //used for coroutines, so that we don't block the main UI thread
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(Dispatchers.IO + this.viewModelJob)
@@ -17,6 +18,8 @@ class ServerDrivenUIViewModel(private val repository: ServerDrivenUIRepository) 
         private set(value) { field = value }
     var callback: ((Component?) -> Unit)? = null
     val rooApiPath = ""
+    val testApiPath = "test"
+    val sampleApiPath = "sample"
 
     fun getInitialView() {
         getView(rooApiPath)
@@ -31,7 +34,7 @@ class ServerDrivenUIViewModel(private val repository: ServerDrivenUIRepository) 
             val component = repository.getServerDrivenUi(apiPath)
             isBusy = false
             val callback = callback?: return@launch
-            withContext(Dispatchers.Main) {
+            withContext(dispatcher) {
                 callback(component)
             }
         }//launch
