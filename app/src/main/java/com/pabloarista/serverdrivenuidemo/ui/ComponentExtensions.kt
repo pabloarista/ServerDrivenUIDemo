@@ -1,12 +1,5 @@
 package com.pabloarista.serverdrivenuidemo.ui
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.util.Log
-import android.widget.ImageView
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -19,16 +12,18 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.modifier.modifierLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextIndent
@@ -36,21 +31,14 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.pabloarista.serverdrivenuidemo.R
-import com.pabloarista.serverdrivenuidemo.shared.data.models.*
+import com.pabloarista.serverdrivenuidemo.shared.data.models.BorderMetric
+import com.pabloarista.serverdrivenuidemo.shared.data.models.Component
+import com.pabloarista.serverdrivenuidemo.shared.data.models.PaddingMetric
 import com.pabloarista.serverdrivenuidemo.shared.data.models.enumerations.*
-import com.pabloarista.serverdrivenuidemo.shared.data.models.enumerations.ShapeMetric
-
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.InputStream
-import java.net.URL
 
 @Composable
-fun Component.build() {
-    when(typeFlag) {
+fun Component.Build() {
+    when(type) {
         ComponentType.TEXT                          -> buildText()
         ComponentType.TEXT_FIELD                    -> buildTextField()
         ComponentType.IMAGE                         -> buildImage()
@@ -61,7 +49,7 @@ fun Component.build() {
         ComponentType.LAZY_COLUMN                   -> buildLazyColumn()
         ComponentType.BUTTON                        -> buildButton()
         ComponentType.SURFACE                       -> buildSurface()
-        ComponentType.FLOATING_ACTION_BUTTON        -> buildFloatinActionButton()
+        ComponentType.FLOATING_ACTION_BUTTON        -> buildFloatingActionButton()
         ComponentType.HORIZONTAL_LAYOUT             -> buildRow()
         ComponentType.VERTICAL_LAYOUT               -> buildColumn()
         ComponentType.SWITCH                        -> buildSwitch()
@@ -80,12 +68,12 @@ fun List<PaddingMetric>?.getPadding(): Modifier {
     }
 
     for(padding in this) {
-        when(padding.positionFlag) {
-            PositionMetric.START        -> modifier = modifier.padding(start = padding.value.dp)
-            PositionMetric.END          -> modifier = modifier.padding(end = padding.value.dp)
-            PositionMetric.TOP          -> modifier = modifier.padding(top = padding.value.dp)
-            PositionMetric.BOTTOM       -> modifier = modifier.padding(bottom = padding.value.dp)
-            PositionMetric.ALL          -> modifier = modifier.padding(all = padding.value.dp)
+        modifier = when(padding.position) {
+            PositionMetric.START        -> modifier.padding(start = padding.value.dp)
+            PositionMetric.END          -> modifier.padding(end = padding.value.dp)
+            PositionMetric.TOP          -> modifier.padding(top = padding.value.dp)
+            PositionMetric.BOTTOM       -> modifier.padding(bottom = padding.value.dp)
+            PositionMetric.ALL          -> modifier.padding(all = padding.value.dp)
         }
     }
 
@@ -98,36 +86,42 @@ fun Modifier.getPadding(padding: List<PaddingMetric>?): Modifier {
         return modifier
     }
 
-    for(currentPadding in padding!!) {
-        when(currentPadding.positionFlag) {
-            PositionMetric.START        -> modifier = modifier.padding(start = currentPadding.value.dp)
-            PositionMetric.END          -> modifier = modifier.padding(end = currentPadding.value.dp)
-            PositionMetric.TOP          -> modifier = modifier.padding(top = currentPadding.value.dp)
-            PositionMetric.BOTTOM       -> modifier = modifier.padding(bottom = currentPadding.value.dp)
-            PositionMetric.ALL          -> modifier = modifier.padding(all = currentPadding.value.dp)
+    for(currentPadding in padding) {
+        modifier = when(currentPadding.position) {
+            PositionMetric.START        -> modifier.padding(start = currentPadding.value.dp)
+            PositionMetric.END          -> modifier.padding(end = currentPadding.value.dp)
+            PositionMetric.TOP          -> modifier.padding(top = currentPadding.value.dp)
+            PositionMetric.BOTTOM       -> modifier.padding(bottom = currentPadding.value.dp)
+            PositionMetric.ALL          -> modifier.padding(all = currentPadding.value.dp)
         }
     }
     return modifier
 }
 
 fun Modifier.getHeight(height: Double?): Modifier {
-    val modifier = if(height == null) this
-    else if(height == -1.0) this.fillMaxHeight()
-    else this.height(height.dp)
+    val modifier = when (height) {
+        null -> this
+        -1.0 -> this.fillMaxHeight()
+        else -> this.height(height.dp)
+    }
     return modifier
 }
 
 fun Modifier.getWidth(width: Double?): Modifier {
-    val modifier = if(width == null) this
-    else if(width == -1.0) this.fillMaxWidth()
-    else this.width(width.dp)
+    val modifier = when (width) {
+        null -> this
+        -1.0 -> this.fillMaxWidth()
+        else -> this.width(width.dp)
+    }
     return modifier
 }
 
 fun Modifier.getSize(size: Double?): Modifier {
-    val modifier = if(size == null) this
-    else if(size == -1.0) this.fillMaxSize()
-    else this.size(size.dp)
+    val modifier = when (size) {
+        null -> this
+        -1.0 -> this.fillMaxSize()
+        else -> this.size(size.dp)
+    }
     return modifier
 }
 
@@ -135,7 +129,7 @@ fun Modifier.getBorder(border: BorderMetric?): Modifier {
     val modifier = if(border == null) this
     else this.border(width = border.width.dp
         , color = border.color.toColor()
-        , shape = border.shapeFlag.toShape(border.shapeSize))
+        , shape = border.shape.toShape(border.shapeSize))
     return modifier
 }
 
@@ -151,11 +145,11 @@ fun Component.getTextStyle(): TextStyle? {
         return null
     }
     val style = style!!
-    val color = if(style.color == null) Color.Unspecified else style.color.toColor()
-    val backgroundColor = if(style.secondaryColor == null) Color.Unspecified else style.secondaryColor.toColor()
+    val color = style.color.toColor()
+    val backgroundColor = style.secondaryColor.toColor()
 
     val fontSize = if(style.size != null) style.size!!.sp else TextUnit.Unspecified
-    val textAlign = when(style.alignmentFlag) {
+    val textAlign = when(style.alignment) {
         AlignmentMetric.LEFT        -> TextAlign.Left
         AlignmentMetric.RIGHT       -> TextAlign.Right
         AlignmentMetric.CENTER      -> TextAlign.Center
@@ -164,16 +158,16 @@ fun Component.getTextStyle(): TextStyle? {
         AlignmentMetric.END         -> TextAlign.End
         null                        -> null
     }
-    val fontWeight = if(style.font == null) null else if(style.font!!.styleMetric.value and FontStyleMetric.BOLD.value == FontStyleMetric.BOLD.value) {
+    val fontWeight = if(style.font == null) null else if(style.font!!.style.value and FontStyleMetric.BOLD.value == FontStyleMetric.BOLD.value) {
         FontWeight.Bold
     } else {
         FontWeight(weight = style.font!!.weight)
     }
-    val fontStyle = if(style.font == null) null else if(style.font!!.styleMetric.value and FontStyleMetric.ITALIC.value == FontStyleMetric.ITALIC.value) {
+    val fontStyle = if(style.font == null) null else if(style.font!!.style.value and FontStyleMetric.ITALIC.value == FontStyleMetric.ITALIC.value) {
         FontStyle.Italic
     } else FontStyle.Normal
 
-    val fontFamily = when(style.font?.familyMetric) {
+    val fontFamily = when(style.font?.family) {
         FontFamilyMetric.DEFAULT            -> null
         FontFamilyMetric.SANS_SERTIF        -> FontFamily.SansSerif
         FontFamilyMetric.SERIF              -> FontFamily.Serif
@@ -182,9 +176,9 @@ fun Component.getTextStyle(): TextStyle? {
         null                                -> null
     }
 
-    val textDecoration = if(style.font == null) null else if(style.font!!.styleMetric.value and FontStyleMetric.UNDERLINE.value == FontStyleMetric.UNDERLINE.value) {
+    val textDecoration = if(style.font == null) null else if(style.font!!.style.value and FontStyleMetric.UNDERLINE.value == FontStyleMetric.UNDERLINE.value) {
         TextDecoration.Underline
-    } else if(style.font!!.styleMetric.value and FontStyleMetric.LINE_THROUGH.value == FontStyleMetric.LINE_THROUGH.value) {
+    } else if(style.font!!.style.value and FontStyleMetric.LINE_THROUGH.value == FontStyleMetric.LINE_THROUGH.value) {
         TextDecoration.LineThrough
     } else {
         TextDecoration.None
@@ -208,8 +202,11 @@ fun Component.buildTextField() {
     var value by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(""))
     }
-    val color = style?.color.toColor()
-    val backgroundColor = style?.secondaryColor.toColor()
+    var visualTransformation = if(style?.textField == null || !style!!.textField!!.isPassword) {
+        VisualTransformation.None
+    } else {
+        PasswordVisualTransformation(style!!.textField!!.mask)
+    }
     BasicTextField(
         value = value
         , textStyle = getTextStyle() ?: TextStyle.Default
@@ -232,7 +229,7 @@ fun Component.buildTextField() {
                 }
                 innerTextField()
             }
-        }
+        }, visualTransformation = visualTransformation
     )
 }
 
@@ -240,8 +237,8 @@ fun Component.buildTextField() {
 fun Component.buildImage() {
     var modifier = getModifier()
 
-    if(style?.clipShape != null && style!!.clipShapeFlag.value != ShapeMetric.DEFAULT.value) {
-        modifier = modifier.clip(style!!.clipShapeFlag.toShape(style!!.clipShapeSize))
+    if(style?.clipShape != null && style!!.clipShape != ShapeMetric.DEFAULT) {
+        modifier = modifier.clip(style!!.clipShape.toShape(style!!.clipShapeSize))
     }
 
     Image(painter = rememberAsyncImagePainter(dataApiPath)
@@ -264,9 +261,9 @@ fun Component.buildSpace() {
 
 @Composable
 fun Component.buildRow() {
-    var modifier = getModifier()
+    val modifier = getModifier()
 
-    val verticalAlignment: Alignment.Vertical = when(style?.alignmentFlag) {
+    val verticalAlignment: Alignment.Vertical = when(style?.alignment) {
         AlignmentMetric.LEFT, AlignmentMetric.START         -> Alignment.Top
         AlignmentMetric.RIGHT, AlignmentMetric.END          -> Alignment.Bottom
         AlignmentMetric.CENTER                              -> Alignment.CenterVertically
@@ -275,16 +272,16 @@ fun Component.buildRow() {
     Row(modifier = modifier
         , verticalAlignment = verticalAlignment) {
         for(child in children) {
-            child.build()
+            child.Build()
         }
     }
 }
 
 @Composable
 fun Component.buildColumn() {
-    var modifier = getModifier()
+    val modifier = getModifier()
 
-    val horizontalAlignment = when(style?.alignmentFlag) {
+    val horizontalAlignment = when(style?.alignment) {
         AlignmentMetric.LEFT, AlignmentMetric.START         -> Alignment.Start
         AlignmentMetric.RIGHT, AlignmentMetric.END          -> Alignment.End
         AlignmentMetric.CENTER                              -> Alignment.CenterHorizontally
@@ -293,7 +290,7 @@ fun Component.buildColumn() {
     Column(modifier = modifier
         , horizontalAlignment = horizontalAlignment) {
         for(child in children) {
-            child.build()
+            child.Build()
         }
     }
 }
@@ -303,7 +300,7 @@ fun Component.buildLazyRow() {
     LazyRow {
         for(child in children) {
             item {
-                child.build()
+                child.Build()
             }
         }
     }
@@ -314,7 +311,7 @@ fun Component.buildLazyColumn() {
     LazyColumn {
         for(child in children) {
             item {
-                child.build()
+                child.Build()
             }
         }
     }
@@ -322,36 +319,36 @@ fun Component.buildLazyColumn() {
 
 @Composable
 fun Component.buildButton() {
-    val color = if(style?.color == null) Color.Unspecified else style!!.color.toColor()
-    val backgroundColor = if(style?.secondaryColor == null) Color.Unspecified else style!!.secondaryColor.toColor()
+    val color = style?.color.toColor()
+    val backgroundColor = style?.secondaryColor.toColor()
     val modifier = getModifier()
     Button(onClick = { /*TODO*/ }
         , modifier = modifier
         , colors = ButtonDefaults.buttonColors(containerColor = backgroundColor, contentColor = color)) {
         for(child in children) {
-            child.build()
+            child.Build()
         }
     }
 }
 
 @Composable
 fun Component.buildSurface() {
-    var modifier = getModifier()
-    val color = if(style?.color == null) Color.Unspecified else style!!.color.toColor()
-    val shape = style?.shapeMetric.toShape(style?.shapeSize?: 0.0)
+    val modifier = getModifier()
+    val color = style?.color.toColor()
+    val shape = style?.shape.toShape(style?.shapeSize?: 0.0)
     Surface(modifier = modifier
         , color = color
         , shape = shape) {
         for(child in children) {
-            child.build()
+            child.Build()
         }
     }
 }
 
 @Composable
-fun Component.buildFloatinActionButton() {
-    val shape = if(style?.shapeMetric == null) FloatingActionButtonDefaults.shape
-    else style!!.shapeMetric.toShape(style?.shapeSize?: 0.0)
+fun Component.buildFloatingActionButton() {
+    val shape = if(style?.shape == null) FloatingActionButtonDefaults.shape
+    else style!!.shape.toShape(style?.shapeSize?: 0.0)
     val containerColor = if(style?.secondaryColor == null || style!!.secondaryColor.isNullOrBlank()) FloatingActionButtonDefaults.containerColor
     else style?.secondaryColor.toColor()
     val contentColor = if(style?.color == null || style!!.color.isNullOrBlank()) contentColorFor(containerColor)
@@ -362,7 +359,7 @@ fun Component.buildFloatinActionButton() {
         , containerColor = containerColor
         , contentColor = contentColor) {
         for(child in children) {
-            child.build()
+            child.Build()
         }
     }
 }
@@ -422,22 +419,6 @@ fun Component.getModifier(): Modifier {
         .getBorder(style?.border)
 }
 
-//fun testData(): Component {
-//    var id = 0
-//    val component = Component(id = id++
-//        , type = ComponentType.COLUMN.value
-//        , text = null
-//        , secondaryText = null
-//        , children = mutableListOf()
-//        , style = ComponentStyle(padding = listOf(PaddingMetric(value = 0.0, position = PositionMetric.ALL.value))
-//            , color = "FFFFFF00"
-//            , width = -1.0
-//            , alignment = AlignmentMetric.CENTER.value)
-//        , dataApiPath = ""
-//    )
-//    return component
-//}
-
 fun String?.toColor(): Color {
     if(this?.isBlank() != false) {
         return Color.Unspecified
@@ -446,9 +427,9 @@ fun String?.toColor(): Color {
 }
 
 fun ShapeMetric?.toShape(size: Double): Shape {
-    when(this) {
-        ShapeMetric.DEFAULT, ShapeMetric.RECTANGLE, null    -> return RectangleShape
-        ShapeMetric.CIRCLE -> return CircleShape
-        ShapeMetric.ROUNDED_CORNER -> return RoundedCornerShape(size.dp)
+    return when(this) {
+        ShapeMetric.DEFAULT, ShapeMetric.RECTANGLE, null    -> RectangleShape
+        ShapeMetric.CIRCLE -> CircleShape
+        ShapeMetric.ROUNDED_CORNER -> RoundedCornerShape(size.dp)
     }
 }
