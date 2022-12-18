@@ -12,7 +12,7 @@ class ServerDrivenUIRepository {
             val client = OkHttpClient()
 
             val request = Request.Builder()
-                .url("http://192.168.0.201:5001/$apiPath")
+                .url("http://192.168.0.201:8080/$apiPath")
                 .build()
 
             val response = client.newCall(request).execute()
