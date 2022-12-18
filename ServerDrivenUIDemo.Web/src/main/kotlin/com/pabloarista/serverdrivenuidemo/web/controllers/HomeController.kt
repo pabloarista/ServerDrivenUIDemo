@@ -11,13 +11,21 @@ import java.io.*
 @RestController
 class HomeController {
     @GetMapping("/")
-    fun index(): Component? {
+    fun index(): Component? = getComponent("main.xml")
+
+    @GetMapping("/test")
+    fun test(): Component? = getComponent("test.xml")
+
+    @GetMapping("/sample")
+    fun sample(): Component = Component.testData()
+
+    private fun getComponent(fileName: String): Component? {
         var component: Component?
         try {
             val rootPath = File("").absoluteFile
             //instead of grabbing it from the resource file we grab it directly from the file system.
             // This way the file can be modified and the web server does NOT need to be restarted.
-            val completePath = "$rootPath/ServerDrivenUIDemo.Web/src/main/resources/test.xml"
+            val completePath = "$rootPath/ServerDrivenUIDemo.Web/src/main/resources/$fileName"
             FileInputStream(completePath).use { inputStream ->
                 val serializer: Serializer = Persister()
                 component = serializer.read(Component::class.java, inputStream)
@@ -27,10 +35,5 @@ class HomeController {
             component = null
         }
         return component
-    }
-
-    @GetMapping("/test")
-    fun test(): Component {
-        return Component.testData()
     }
 }
