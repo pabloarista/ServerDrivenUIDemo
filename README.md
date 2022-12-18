@@ -15,6 +15,6 @@ More instructions to come in the future, but basically after setting up the proj
 
 There's a **UML Class Diagram** file named [SDUI-CD.xml](diagrams/uml/class-diagrams/SDUI-CD.xml). This was created using [draw.io](https://app.draw.io).
 
-On the Android app just tap on either **Main** **Test** after you modify the [XML files](ServerDrivenUIDemo.Web/src/main/resources/). You must save the file after modifying.
+On the Android app just tap on either **Main** or **Test** after you modify the [XML files](ServerDrivenUIDemo.Web/src/main/resources/). You must save the file after modifying.
 
 Android Studio does NOT save it for you since it's being read dynamically and without rebuilding.
