@@ -47,40 +47,41 @@ class MainActivity : ComponentActivity() {
         val serializer: Serializer = Persister()
         val dataFetch = serializer.read(XmlTest::class.java, xmlTest)
         println(dataFetch)
-        refreshUi()
+        refreshUi(viewModel.rooApiPath)
     }
 
     @Composable
-    fun serverContent(component: Component) {
+    fun ServerContent(component: Component) {
         component.Build()
     }
 
     fun serverContentCallback(component: Component?) {
         setContent {
             Column {
-                refreshButton()
+                Spacer(modifier = Modifier.height(15.dp))
+                Row(modifier = Modifier.fillMaxWidth()
+                    , horizontalArrangement = Arrangement.Center) {
+                    RefreshButton(title = "Main", viewModel.rooApiPath)
+                    RefreshButton(title = "Test", viewModel.testApiPath)
+                    RefreshButton(title = "Sample", viewModel.sampleApiPath)
+                }
                 if(component != null) {
-                    serverContent(component = component)
+                    ServerContent(component = component)
                 }
             }
         }
     }
 
-    @Preview
     @Composable
-    fun refreshButton() {
-        Spacer(modifier = Modifier.height(15.dp))
-        Column(modifier = Modifier.fillMaxWidth()
-            , horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = ::refreshUi) {
-                Text("Refresh")
-            }
+    fun RefreshButton(title: String, apiPath: String) {
+        Button(onClick = { refreshUi(apiPath) }) {
+            Text(title)
         }
     }
 
-    fun refreshUi() {
+    fun refreshUi(apiPath: String) {
         viewModel.callback = ::serverContentCallback
-        viewModel.getInitialView()
+        viewModel.getView(apiPath)
     }
 }
 
