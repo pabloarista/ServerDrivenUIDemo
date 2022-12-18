@@ -4,12 +4,12 @@
     <style>
         <color>FFD3D3D3</color>
         <width>-1</width>
-        <PADDING>
+        <padding>
             <PaddingMetric>
                 <value>25</value>
                 <position>TOP</position>
             </PaddingMetric>
-        </PADDING>
+        </padding>
     </style>
     <children>
         <Component>
@@ -125,7 +125,7 @@
                 <Component>
                     <type>DIVIDER</type>
                     <style>
-                        <COLOR>FF000000</COLOR>
+                        <color>FF000000</color>
                         <padding>
                             <PaddingMetric>
                                 <value>10</value>
@@ -175,7 +175,7 @@
                 </Component>
                 <Component>
                     <type>ROW</type>
-                    <CHILDREN>
+                    <children>
                         <Component>
                             <type>CHECKBOX</type>
                         </Component>
@@ -192,7 +192,7 @@
                             <children>
                                 <Component>
                                     <type>TEXT</type>
-                                    <TEXT>This is a text for the checkbox</TEXT>
+                                    <text>This is a text for the checkbox</text>
                                     <style>
                                         <height>50</height>
                                         <padding>
@@ -217,7 +217,7 @@
                                 </Component>
                             </children>
                         </Component>
-                    </CHILDREN>
+                    </children>
                 </Component>
                 <Component>
                     <type>FLOATING_ACTION_BUTTON</type>
@@ -242,7 +242,7 @@
                         </Component>
                     </children>
                 </Component>
-                <COMPONENT>
+                <Component>
                     <type>TEXT</type>
                     <text>Some new text...</text>
                     <style>
@@ -251,13 +251,13 @@
                                 <value>5</value>
                                 <position>ALL</position>
                             </PaddingMEtric>
-                            <PADDINGMETRIC>
+                            <PaddingMetric>
                                 <value>25</value>
                                 <position>START</position>
-                            </PADDINGMETRIC>
+                            </PaddingMetric>
                         </padding>
                     </style>
-                </COMPONENT>
+                </Component>
             </children>
         </Component>
     </children>
