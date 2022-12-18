@@ -36,17 +36,12 @@ import androidx.compose.ui.unit.sp
 import com.pabloarista.serverdrivenuidemo.ui.Build
 import com.pabloarista.serverdrivenuidemo.ui.theme.ServerDrivenUIDemoTheme
 import com.pabloarista.serverdrivenuidemo.ui.toColor
-import org.simpleframework.xml.Serializer
-import org.simpleframework.xml.core.Persister
 import com.pabloarista.serverdrivenuidemo.shared.data.models.Component
 
 class MainActivity : ComponentActivity() {
     val viewModel = ServerDrivenUIApplication.serverDrivernUIViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val serializer: Serializer = Persister()
-        val dataFetch = serializer.read(XmlTest::class.java, xmlTest)
-        println(dataFetch)
         refreshUi(viewModel.rooApiPath)
     }
 
@@ -74,7 +69,8 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun RefreshButton(title: String, apiPath: String) {
-        Button(onClick = { refreshUi(apiPath) }) {
+        Button(modifier = Modifier.padding(10.dp)
+            , onClick = { refreshUi(apiPath) }) {
             Text(title)
         }
     }
@@ -228,12 +224,6 @@ fun MainContent() {
     }
 }
 
-
-//fun Color.hexStringToColor(hexString: String, alpha: Double): Color {
-//    val components = hexString.toCharArray().map { ("" + it).toLong() }
-////    return Color(red = components[0], green = components[1], blue = components[2], alpha = alpha)
-//}
-
 fun testItems(): List<Person> {
     val people = mutableListOf<Person>()
     for(i in 0..100) {
@@ -266,12 +256,4 @@ val MaterialTheme.shapeScheme: Shape
     @Composable
     @ReadOnlyComposable
     get() = LocalShape.current
-val xmlTest = "" +
-        "<XmlTest>" +
-            "<child>blah</child>" +
-        "</XmlTest>"
-
-class XmlTest {
-    lateinit var child: String
-}
 

@@ -60,13 +60,9 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
-
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     //this is used for downloading image URLs in the image jetpackcompose
     implementation("io.coil-kt:coil-compose:2.2.2")
-
-    implementation 'org.simpleframework:simple-xml:2.7.1'
-
     implementation project(path: ':ServerDrivernUIShared')
 }
