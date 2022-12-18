@@ -10,15 +10,6 @@ plugins {
 	id 'org.jetbrains.kotlin.plugin.spring' version '1.6.10'
 }
 
-/*java {
-	// NOTE: this is very important to make sure it's applied alongside any other
-	// `java` configuration, such as `javadoc`
-	toolchain {
-		// or if you're using a newer JDK
-		languageVersion.set(JavaLanguageVersion.of(17))
-	}
-}*/
-
 tasks.withType(JavaCompile) {
 	options.release.set(17)
 }
