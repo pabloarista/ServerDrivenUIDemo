@@ -7,10 +7,13 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="ibm-17" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/ServerDrivenUIDemo.Web" />
             <option value="$PROJECT_DIR$/ServerDrivernUIShared" />
+            <option value="$PROJECT_DIR$/TestProgram" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
