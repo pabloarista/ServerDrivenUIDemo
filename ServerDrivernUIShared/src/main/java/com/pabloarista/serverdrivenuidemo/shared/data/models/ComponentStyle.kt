@@ -4,20 +4,19 @@ import com.pabloarista.serverdrivenuidemo.shared.data.models.enumerations.Alignm
 import com.pabloarista.serverdrivenuidemo.shared.data.models.enumerations.ShapeMetric
 import com.pabloarista.serverdrivenuidemo.shared.data.models.enumerations.toEnum
 
-class ComponentStyle(val padding: List<PaddingMetric>
-    , val color             : String? = null
-    , val secondaryColor    : String? = null
-    , val clipShape         : Int = ShapeMetric.DEFAULT.value
-    , val clipShapeSize     : Double = 0.0
-    , val height            : Double? = null
-    , val width             : Double? = null
-    , val size              : Double? = null
-    , val border            : BorderMetric? = null
-    , val alignment         : Int? = null
-    , val font              : ComponentFontStyle? = null
-    , val shape              : Int? = null
-    , val shapeSize     : Double = 0.0) {
-    val clipShapeFlag get() = clipShape.toEnum(defaultValue = ShapeMetric.DEFAULT)
-    val alignmentFlag get() = alignment?.toEnum(defaultValue = AlignmentMetric.LEFT)
-    val shapeMetric get() = shape?.toEnum(defaultValue = ShapeMetric.DEFAULT)
+class ComponentStyle {
+    var padding             = mutableListOf<PaddingMetric>()
+    var color               : String? = null
+    var secondaryColor      : String? = null
+    var clipShape           = ShapeMetric.DEFAULT
+    var clipShapeSize       = 0.0
+    var height              : Double? = null
+    var width               : Double? = null
+    var size                : Double? = null
+    var border              : BorderMetric? = null
+    var alignment           : AlignmentMetric? = null
+    var font                : ComponentFontStyle? = null
+    var shape               : ShapeMetric? = null
+    var shapeSize           = 0.0
+    var textField           : ComponentTextFieldStyle? = null
 }
