@@ -2,114 +2,137 @@
 <Component>
     <type>SURFACE</type>
     <style>
-        <color>FFD3D3D3</color>
+        <color>FFffff00</color>
         <width>-1</width>
-        <PADDING>
-            <PaddingMetric>
-                <value>25</value>
-                <position>TOP</position>
-            </PaddingMetric>
-        </PADDING>
+        <height>-1</height>
     </style>
     <children>
         <Component>
             <type>COLUMN</type>
-            <style>
-                <padding>
-                    <PaddingMetrice>
-                        <value>15.0</value>
-                        <position>ALL</position>
-                    </PaddingMetrice>
-                </padding>
-                <alignment>LEFT</alignment>
-            </style>
             <children>
                 <Component>
                     <type>ROW</type>
+                    <style>
+                        <padding>
+                            <PaddingMetric>
+                                <value>15</value>
+                                <position>ALL</position>
+                            </PaddingMetric>
+                        </padding>
+                    </style>
                     <children>
-                        <Component>
-                            <type>IMAGE</type>
-                            <style>
-                                <height>50</height>
-                                <width>50</width>
-                            </style>
-                            <dataApiPath>https://clipground.com/images/web-developer-logo-png-5.png</dataApiPath>
-                        </Component>
                         <Component>
                             <type>TEXT</type>
                             <text>Email:</text>
                             <style>
                                 <padding>
                                     <PaddingMetric>
-                                        <value>20</value>
+                                        <value>10</value>
+                                        <position>ALL</position>
+                                    </PaddingMetric>
+                                    <PaddingMetric>
+                                        <value>15</value>
                                         <position>START</position>
                                     </PaddingMetric>
                                 </padding>
                             </style>
                         </Component>
                         <Component>
-                            <type>SURFACE</type>
+                            <type>TEXT_FIELD</type>
+                            <text>Enter email here...</text>
                             <style>
                                 <padding>
                                     <PaddingMetric>
-                                        <value>25</value>
+                                        <value>10</value>
+                                        <position>ALL</position>
+                                    </PaddingMetric>
+                                    <PaddingMetric>
+                                        <value>15</value>
+                                        <position>START</position>
+                                    </PaddingMetric>
+                                    <PaddingMetric>
+                                        <value>15</value>
+                                        <position>END</position>
+                                    </PaddingMetric>
+                                </padding>
+                                <border>
+                                    <width>1</width>
+                                    <color>FF000000</color>
+                                    <shape>ROUNDED_CORNER</shape>
+                                    <shapeSize>13</shapeSize>
+                                </border>
+                                <!--                        <color>FFFFFFFF</color>-->
+                            </style>
+                        </Component>
+                    </children>
+                </Component>
+                <Component>
+                    <type>ROW</type>
+                    <children>
+                        <Component>
+                            <type>TEXT</type>
+                            <text>Password:</text>
+                            <style>
+                                <padding>
+                                    <PaddingMetric>
+                                        <value>10</value>
+                                        <position>ALL</position>
+                                    </PaddingMetric>
+                                    <PaddingMetric>
+                                        <value>15</value>
                                         <position>START</position>
                                     </PaddingMetric>
                                 </padding>
-                                <!--<color>FFFFFFFF</color>-->
                             </style>
-                            <children>
-                                <Component>
-                                    <type>COLUMN</type>
-                                    <children>
-                                        <Component>
-                                            <type>TEXT_FIELD</type>
-                                            <text>Enter email here...</text>
-                                            <style>
-                                                <secondaryColor>FFFFFFFF</secondaryColor>
-                                                <color>FF000000</color>
-                                                <width>-1</width>
-                                                <height>35</height>
-                                                <border>
-                                                    <width>1</width>
-                                                    <color>ff000000</color>
-                                                    <shape>ROUNDED_CORNER</shape>
-                                                    <shapeSize>15</shapeSize>
-                                                </border>
-                                                <padding>
-                                                    <PaddingMetric>
-                                                        <value>8</value>
-                                                        <position>ALL</position>
-                                                    </PaddingMetric>
-                                                    <PaddingMetric>
-                                                        <value>10</value>
-                                                        <position>START</position>
-                                                    </PaddingMetric>
-                                                </padding>
-                                            </style>
-                                        </Component>
-                                    </children>
-                                </Component>
-                            </children>
+                        </Component>
+                        <Component>
+                            <type>TEXT_FIELD</type>
+                            <text>Enter password here...</text>
+                            <style>
+                                <padding>
+                                    <PaddingMetric>
+                                        <value>10</value>
+                                        <position>ALL</position>
+                                    </PaddingMetric>
+                                    <PaddingMetric>
+                                        <value>15</value>
+                                        <position>START</position>
+                                    </PaddingMetric>
+                                    <PaddingMetric>
+                                        <value>15</value>
+                                        <position>END</position>
+                                    </PaddingMetric>
+                                </padding>
+                                <border>
+                                    <width>1</width>
+                                    <color>FF000000</color>
+                                    <shape>ROUNDED_CORNER</shape>
+                                    <shapeSize>13</shapeSize>
+                                </border>
+                                <textField>
+                                    <isPassword>true</isPassword>
+                                    <mask>x</mask>
+                                </textField>
+                            </style>
                         </Component>
                     </children>
                 </Component>
                 <Component>
                     <type>COLUMN</type>
                     <style>
-                        <alignment>CENTER</alignment>
                         <width>-1</width>
+                        <alignment>CENTER</alignment>
                     </style>
                     <children>
                         <Component>
                             <type>BUTTON</type>
                             <style>
-                                <color>FFFFFFFF</color>
-                                <secondaryColor>FF0000ff</secondaryColor>
+                                <color>ffffffff</color>
+                                <secondaryColor>ff0000ff</secondaryColor>
                                 <padding>
                                     <PaddingMetric>
-                                        <value>25</value>
-                                        <position>TOP</position>
+                                        <value>15</value>
+                                        <position>ALL</position>
                                     </PaddingMetric>
                                 </padding>
                             </style>
@@ -122,142 +145,6 @@
                         </Component>
                     </children>
                 </Component>
-                <Component>
-                    <type>DIVIDER</type>
-                    <style>
-                        <COLOR>FF000000</COLOR>
-                        <padding>
-                            <PaddingMetric>
-                                <value>10</value>
-                                <position>TOP</position>
-                            </PaddingMetric>
-                            <PaddingMetric>
-                                <value>30</value>
-                                <position>BOTTOM</position>
-                            </PaddingMetric>
-                        </padding>
-                    </style>
-                </Component>
-                <Component>
-                    <type>ROW</type>
-                    <children>
-                        <Component>
-                            <type>IMAGE</type>
-                            <dataApiPath>https://static.vecteezy.com/system/resources/previews/000/450/526/original/android-vector-icon.jpg</dataApiPath>
-                            <style>
-                                <height>50</height>
-                                <width>50</width>
-                                <clipShape>CIRCLE</clipShape>
-                            </style>
-                        </Component>
-                        <Component>
-                            <type>SWITCH</type>
-                            <style>
-                                <padding>
-                                    <PaddingMetric>
-                                        <value>5</value>
-                                        <position>ALL</position>
-                                    </PaddingMetric>
-                                    <PaddingMetric>
-                                        <value>25</value>
-                                        <position>START</position>
-                                    </PaddingMetric>
-                                </padding>
-                            </style>
-                        </Component>
-                        <Component>
-                            <type>RADIO_BUTTON</type>
-                        </Component>
-                    </children>
-                </Component>
-                <Component>
-                    <type>SLIDER</type>
-                </Component>
-                <Component>
-                    <type>ROW</type>
-                    <CHILDREN>
-                        <Component>
-                            <type>CHECKBOX</type>
-                        </Component>
-                        <Component>
-                            <type>COLUMN</type>
-                            <style>
-                                <border>
-                                    <width>1</width>
-                                    <color>ff000000</color>
-                                    <shape>ROUNDED_CORNER</shape>
-                                    <shapeSize>18.0</shapeSize>
-                                </border>
-                            </style>
-                            <children>
-                                <Component>
-                                    <type>TEXT</type>
-                                    <TEXT>This is a text for the checkbox</TEXT>
-                                    <style>
-                                        <height>50</height>
-                                        <padding>
-                                            <PAddingMetric>
-                                                <value>5</value>
-                                                <position>ALL</position>
-                                            </PAddingMetric>
-                                            <PaddingMetric>
-                                                <value>10</value>
-                                                <position>START</position>
-                                            </PaddingMetric>
-                                            <PaddingMetric>
-                                                <value>15</value>
-                                                <position>TOP</position>
-                                            </PaddingMetric>
-                                            <PaddingMetric>
-                                                <value>10</value>
-                                                <position>END</position>
-                                            </PaddingMetric>
-                                        </padding>
-                                    </style>
-                                </Component>
-                            </children>
-                        </Component>
-                    </CHILDREN>
-                </Component>
-                <Component>
-                    <type>FLOATING_ACTION_BUTTON</type>
-                    <style>
-                        <shape>CIRCLE</shape>
-                        <shapeSize>25</shapeSize>
-                        <alignment>RIGHT</alignment>
-                        <secondaryColor>ffffff00</secondaryColor>
-                        <color>ff000000</color>
-                        <size>75.5</size>
-                        <padding>
-                            <PaddingMEtric>
-                                <value>10</value>
-                                <position>ALL</position>
-                            </PaddingMEtric>
-                        </padding>
-                    </style>
-                    <children>
-                        <Component>
-                            <type>TEXT</type>
-                            <text>Tap me!</text>
-                        </Component>
-                    </children>
-                </Component>
-                <COMPONENT>
-                    <type>TEXT</type>
-                    <text>Some new text...</text>
-                    <style>
-                        <padding>
-                            <PaddingMEtric>
-                                <value>5</value>
-                                <position>ALL</position>
-                            </PaddingMEtric>
-                            <PADDINGMETRIC>
-                                <value>25</value>
-                                <position>START</position>
-                            </PADDINGMETRIC>
-                        </padding>
-                    </style>
-                </COMPONENT>
             </children>
         </Component>
     </children>
