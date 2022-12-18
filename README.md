@@ -11,10 +11,10 @@ The only weird quirk is after running the Android app, the spring boot app no lo
 
 So debugging both applications is not a problem.
 
-More instructions to come in the future, but basically after setting up the project just modify the [xml files](ServerDrivenUIDemo.Web/src/main/resources/) ([test.xml](ServerDrivenUIDemo.Web/src/main/resources/test.xml) and [main.xml](ServerDrivenUIDemo.Web/src/main/resources/main.xml)) using the structure of Component.
+More instructions to come in the future, but basically after setting up the project just modify the [XML files](ServerDrivenUIDemo.Web/src/main/resources/) ([test.xml](ServerDrivenUIDemo.Web/src/main/resources/test.xml) and [main.xml](ServerDrivenUIDemo.Web/src/main/resources/main.xml)) using the structure of Component.
 
-There's a UML Class Diagram in [diagrams/uml/class-diagrams/SDUI-CD.xml](diagrams/uml/class-diagrams/SDUI-CD.xml). This was created using [draw.io](https://app.draw.io).
+There's a **UML Class Diagram** file named [SDUI-CD.xml](diagrams/uml/class-diagrams/SDUI-CD.xml). This was created using [draw.io](https://app.draw.io).
 
-On the Android app just hit refresh after you modify the XML file. You must save the file after modifying.
+On the Android app just tap on either **Main** **Test** after you modify the [XML files](ServerDrivenUIDemo.Web/src/main/resources/). You must save the file after modifying.
 
 Android Studio does NOT save it for you since it's being read dynamically and without rebuilding.
