@@ -13,6 +13,7 @@ class Component {
     var children                : MutableList<Component> = mutableListOf()
     var style                   : ComponentStyle? = null
     var dataApiPath             : String = ""
+    var isEnabled               = true
 
     companion object {
         fun testData(): Component {
@@ -24,8 +25,11 @@ class Component {
                 childComponent.type = ComponentType.TEXT
                 childComponent.text = "Hello #$i"
                 val childComponentStyle = ComponentStyle()
-                childComponentStyle.color = "FF0000FF"
-                childComponentStyle.padding = mutableListOf()
+                childComponentStyle.colors = mutableListOf("FF0000FF")
+                val paddingMetric = PaddingMetric()
+                paddingMetric.value = 20.0
+                paddingMetric.position = PositionMetric.ALL
+                childComponentStyle.padding = mutableListOf(paddingMetric)
                 childComponent.style = childComponentStyle
                 childComponent.dataApiPath = ""
                 children.add(childComponent)
@@ -40,7 +44,7 @@ class Component {
             component.children = children
             val componentStyle = ComponentStyle()
             componentStyle.padding = padding
-            componentStyle.alignment = AlignmentMetric.CENTER
+            componentStyle.verticalAlignment = AlignmentMetric.START
             component.dataApiPath = ""
             component.style = componentStyle
             val rootComponent = Component()
@@ -49,7 +53,7 @@ class Component {
             rootComponent.children = mutableListOf(component)
             val rootComponentStyle = ComponentStyle()
             rootComponentStyle.padding = padding
-            rootComponentStyle.color = "FFFFFF00"
+            rootComponentStyle.colors = mutableListOf("FFFFFF00")
             rootComponentStyle.size = -1.0
             rootComponent.style = rootComponentStyle
             rootComponent.dataApiPath = ""

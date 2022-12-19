@@ -2,7 +2,9 @@
 <Component>
     <type>SURFACE</type>
     <style>
-        <color>FFD3D3D3</color>
+        <colors>
+            <value>FFD3D3D3</value>
+        </colors>
         <width>-1</width>
         <padding>
             <PaddingMetric>
@@ -21,7 +23,7 @@
                         <position>ALL</position>
                     </PaddingMetrice>
                 </padding>
-                <alignment>LEFT</alignment>
+                <horizontalAlignment>LEFT</horizontalAlignment>
             </style>
             <children>
                 <Component>
@@ -56,7 +58,9 @@
                                         <position>START</position>
                                     </PaddingMetric>
                                 </padding>
-                                <!--<color>FFFFFFFF</color>-->
+                                <!--<colors>
+                                    <value>FFFFFFFF</value>
+                                </colors>-->
                             </style>
                             <children>
                                 <Component>
@@ -66,8 +70,10 @@
                                             <type>TEXT_FIELD</type>
                                             <text>Enter email here...</text>
                                             <style>
-                                                <secondaryColor>FFFFFFFF</secondaryColor>
-                                                <color>FF000000</color>
+                                                <colors>
+                                                    <value>FF000000</value>
+                                                    <value>FFFFFFFF</value>
+                                                </colors>
                                                 <width>-1</width>
                                                 <height>35</height>
                                                 <border>
@@ -97,15 +103,17 @@
                 <Component>
                     <type>COLUMN</type>
                     <style>
-                        <alignment>CENTER</alignment>
+                        <horizontalAlignment>CENTER</horizontalAlignment>
                         <width>-1</width>
                     </style>
                     <children>
                         <Component>
                             <type>BUTTON</type>
                             <style>
-                                <color>FFFFFFFF</color>
-                                <secondaryColor>FF0000ff</secondaryColor>
+                                <colors>
+                                    <value>FFFFFFFF</value>
+                                    <value>FF0000ff</value>
+                                </colors>
                                 <padding>
                                     <PaddingMetric>
                                         <value>25</value>
@@ -125,7 +133,9 @@
                 <Component>
                     <type>DIVIDER</type>
                     <style>
-                        <color>FF000000</color>
+                        <colors>
+                            <value>FF000000</value>
+                        </colors>
                         <padding>
                             <PaddingMetric>
                                 <value>10</value>
@@ -224,9 +234,10 @@
                     <style>
                         <shape>CIRCLE</shape>
                         <shapeSize>25</shapeSize>
-                        <alignment>RIGHT</alignment>
-                        <secondaryColor>ffffff00</secondaryColor>
-                        <color>ff000000</color>
+                        <colors>
+                            <value>ff000000</value>
+                            <value>ffffff00</value>
+                        </colors>
                         <size>75.5</size>
                         <padding>
                             <PaddingMEtric>

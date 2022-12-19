@@ -2,7 +2,9 @@
 <Component>
     <type>SURFACE</type>
     <style>
-        <color>FFffff00</color>
+        <colors>
+            <value>FFffff00</value>
+        </colors>
         <width>-1</width>
         <height>-1</height>
     </style>
@@ -121,14 +123,16 @@
                     <type>COLUMN</type>
                     <style>
                         <width>-1</width>
-                        <alignment>CENTER</alignment>
+                        <horizontalAlignment>CENTER</horizontalAlignment>
                     </style>
                     <children>
                         <Component>
                             <type>BUTTON</type>
                             <style>
-                                <color>ffffffff</color>
-                                <secondaryColor>ff0000ff</secondaryColor>
+                                <colors>
+                                    <value>ffffffff</value>
+                                    <value>ff0000ff</value>
+                                </colors>
                                 <padding>
                                     <PaddingMetric>
                                         <value>15</value>
